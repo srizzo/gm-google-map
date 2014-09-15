@@ -1,0 +1,22 @@
+{
+  "name": "gm-google-map",
+  "version": "0.0.0",
+  "homepage": "https://github.com/srizzo/gm-google-map",
+  "authors": [
+    "srizzo <rizzolabs@gmail.com>"
+  ],
+  "description": "AngularJS directives for Google Maps",
+  "main": "./dist/gm-google-map.js",
+  "keywords": [
+    "angularjs",
+    "google-maps"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
