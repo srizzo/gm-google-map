@@ -205,6 +205,7 @@ angular.module('gm-google-map', [])
 .directive('gmMarker', function() {
   return {
     restrict: 'AE',
+    scope: true,
     require: '^gmMapContext',
     link: function(scope, element, attrs) {
 
