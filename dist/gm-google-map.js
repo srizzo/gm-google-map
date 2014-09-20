@@ -1,6 +1,7 @@
 angular.module('gm-google-map', [])
 .directive('gmMapContext', function() {
   return {
+    scope: true,
     restrict: 'EA',
     controller: function ($scope) {
       var _map;
@@ -18,6 +19,7 @@ angular.module('gm-google-map', [])
 })
 .directive('gmMapCanvas', function() {
   return {
+    scope: true,
     restrict: 'EA',
     require: '^?gmMapContext',
     link: {
@@ -149,6 +151,7 @@ angular.module('gm-google-map', [])
 .directive('gmInfoWindow', function() {
   return {
     require: '^gmMapContext',
+    scope: true,
     link: function(scope, element, attrs) {
       var domElement = element.get(0)
 
@@ -176,6 +179,7 @@ angular.module('gm-google-map', [])
 .directive('gmOverlappingMarkerSpiderfier', function() {
   return {
     restrict: 'AE',
+    scope: true,
     require: '^gmMapContext',
     link: function(scope, element, attrs) {
 
