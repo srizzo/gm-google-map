@@ -6,11 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>gm-google-map Examples</title>
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
     
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -19,38 +17,71 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+      
+    <style>
+      li.L0, li.L1, li.L2, li.L3,
+      li.L5, li.L6, li.L7, li.L8 { list-style-type: decimal !important }
+    </style>
   </head>
   <body>
-    <h1>gm-google-map Examples</h1>
-    
-    <gm-map-context>
-      <div gm-map-canvas
-           gm-zoom="7"
-           gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
-           style="margin: 0; padding:0; height: 400px; width: 400px;"></div>
-    </gm-map-context>
+    <div class="container">
+      
+      <h1>gm-google-map Examples</h1>
+      
+      <h2>Simple map:</h2>
+      
+      <div class="example">      
+<div gm-map-canvas
+     gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
+     gm-zoom="7"
+     style="margin: 0; padding:0; height: 400px; width: 400px;"></div>
+      </div>
+      
+      <h2>Controls:</h2>
+      
+      <div class="example">
+<gm-map-context>
 
-        
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <div gm-map-canvas
+       gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
+       gm-zoom="7"
+       style="margin: 0; padding:0; height: 400px; width: 400px;"></div>
+
+  <gm-controls>
+    <button gm-control gm-position="LEFT_TOP" type="button" class="btn btn-default" style="margin: 10px" >LEFT_TOP</button>
+    <button gm-control gm-position="RIGHT_TOP" type="button" class="btn btn-default" style="margin: 10px" >RIGHT_TOP</button>
+  </gm-controls>
+
+</gm-map-context>
+      </div>
+      
+
+    </div>
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    
-    <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    
+        
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
-    
     <script src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBdLDmkfGQX8CTFaSBsOuQEpPhoSKCdi34&sensor=true"></script>
 
-
-
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
+    
     <script src="../dist/gm-google-map.js"></script>
-    
-    
-    <script type="text/javascript">
-      angular.module('example', ["gm-google-map"])
-      
-    </script>
 
+    <script type="text/javascript">
+
+      $(".example").each(function () {
+        $(this).before($("<pre></pre>").addClass("prettyprint")
+                                       .addClass("lang-html")
+                                       .addClass("linenums")
+                                       .text($.trim($(this).html())))
+      })
+    </script>
+      
+    <script type="text/javascript">
+      angular.module("example", ["gm-google-map"])
+    </script>
+    
   </body>
 </html>
