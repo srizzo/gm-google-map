@@ -4,7 +4,7 @@ angular.module('gm-google-map', [])
     restrict: 'EA',
     controller: function ($scope) {
       var _map;
-      this.setMap = function (map) {
+      $scope.setMap = function (map) {
         _map = map
       }
       this.getMap = function () {
@@ -19,9 +19,9 @@ angular.module('gm-google-map', [])
 .directive('gmMapCanvas', function() {
   return {
     restrict: 'EA',
-    require: '^gmMapContext',
+    require: '^?gmMapContext',
     link: {
-      pre: function (scope, element, attrs, controller) {
+      pre: function (scope, element, attrs) {
 
         var map = new google.maps.Map(element.get(0), {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -37,7 +37,10 @@ angular.module('gm-google-map', [])
           }]
         })
 
-        controller.setMap(map)
+        window.Map = map
+        
+        if (scope.setMap)
+          scope.setMap(map)
 
         if (attrs.gmZoom) {
           scope.$watch(attrs.gmZoom, function(current) {
@@ -80,12 +83,21 @@ angular.module('gm-google-map', [])
             })
           })
         })
+      
       }
     }
   }
 })
+
+/**
+ * @description
+ *
+ * The only purpose of the gmControls directive is to group gmControl directives / dom elements into a hidden element, preventing them from being displayed outside the map
+ *
+ */
 .directive('gmControls', function() {
   return {
+    scope: false,
     require: '^gmMapContext',
     compile: function (element) {
       element.hide()
@@ -94,14 +106,14 @@ angular.module('gm-google-map', [])
 })
 .directive('gmControl', function() {
   return {
-    require: '^gmMapContext',
+    scope: true,
     compile: function(element, attrs) {
 
       if (typeof attrs.gmVisible === 'undefined')
         attrs.gmVisible = "true"
 
       return {
-        post: function(scope, element, attrs) {
+        pre: function(scope, element, attrs) {
 
           var domElement = element.get(0)
 
@@ -116,9 +128,10 @@ angular.module('gm-google-map', [])
           }
 
           scope.show = function() {
-            var index = map.controls[google.maps.ControlPosition[position]].indexOf(domElement)
-            if (index < 0)
-              map.controls[google.maps.ControlPosition[position]].push(domElement)
+            
+          var index = map.controls[google.maps.ControlPosition[position]].indexOf(domElement)
+          if (index < 0)
+            map.controls[google.maps.ControlPosition[position]].push(domElement)
           }
 
           scope.$watch(attrs.gmVisible, function(current) {
