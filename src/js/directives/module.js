@@ -8,9 +8,6 @@ angular.module('gm-google-map', [])
       $scope.setMap = function (map) {
         _map = map
       }
-      this.getMap = function () {
-        return _map
-      }
       $scope.getMap = function () {
         return _map
       }
@@ -38,8 +35,6 @@ angular.module('gm-google-map', [])
             draggable: false
           }]
         })
-
-        window.Map = map
         
         if (scope.setMap)
           scope.setMap(map)
@@ -99,7 +94,7 @@ angular.module('gm-google-map', [])
  */
 .directive('gmAddOns', function() {
   return {
-    scope: false,
+    scope: true,
     restrict: 'EA',
     require: '^gmMapContext',
     compile: function (element) {
@@ -153,26 +148,30 @@ angular.module('gm-google-map', [])
   return {
     require: '^gmMapContext',
     scope: true,
-    link: function(scope, element, attrs) {
-      var domElement = element.get(0)
+    compile: function() {
+      return {
+        pre: function(scope, element, attrs) {
+          var domElement = element.get(0)
 
-      var infoWindow = new google.maps.InfoWindow()
-      infoWindow.setContent(domElement)
+          var infoWindow = new google.maps.InfoWindow()
+          infoWindow.setContent(domElement)
 
-      if (attrs.closeclick) {
-        infoWindow.addListener('closeclick', function() {
-          scope.$apply(function() {
-            scope.$eval(attrs.closeclick)
-          })
-        })
-      }
+          if (attrs.closeclick) {
+            infoWindow.addListener('closeclick', function() {
+              scope.$apply(function() {
+                scope.$eval(attrs.closeclick)
+              })
+            })
+          }
 
-      scope.open = function(marker) {
-        infoWindow.open(scope.getMap(), marker)
-      }
+          scope.openInfoWindow = function() {
+            infoWindow.open(scope.getMap(), scope.getMarker())
+          }
 
-      scope.close = function() {
-        infoWindow.close()
+          scope.closeInfoWindow = function() {
+            infoWindow.close()
+          }
+        }
       }
     }
   }
@@ -212,30 +211,77 @@ angular.module('gm-google-map', [])
     restrict: 'AE',
     scope: true,
     require: '^gmMapContext',
-    link: function(scope, element, attrs) {
+    compile: function() {
+      return {
+        pre: function(scope, element, attrs) {
 
-      var marker = new google.maps.Marker({
-        map: scope.getMap(),
-        data: scope.$eval(attrs.gmData),
-        title: scope.$eval(attrs.gmTitle),
-        optimized: scope.$eval(attrs.gmOptimized),
-        position: new google.maps.LatLng(scope.$eval(attrs.gmLat), scope.$eval(attrs.gmLng))
-      })
+          var marker = new google.maps.Marker({
+            map: scope.getMap(),
+            data: scope.$eval(attrs.gmData),
+            title: scope.$eval(attrs.gmTitle),
+            optimized: scope.$eval(attrs.gmOptimized),
+            position: new google.maps.LatLng(scope.$eval(attrs.gmLat), scope.$eval(attrs.gmLng))
+          })
 
-      var unbindIconWatch = scope.$watch(attrs.gmIcon, function(current) {
-        marker.setIcon(current)
-      })
+          scope.getMarker = function () {
+            return marker
+          }
 
-      scope.$emit("marker_created", marker)
+          var unbindIconWatch = scope.$watch(attrs.gmIcon, function(current) {
+            marker.setIcon(current)
+          })
 
-      scope.$on("$destroy", function() {
-        unbindIconWatch()
-        marker.setMap(null)
-        scope.$emit("marker_destroyed", marker)
-      })
+          scope.$emit("marker_created", marker)
 
+          scope.$on("$destroy", function() {
+            unbindIconWatch()
+            marker.setMap(null)
+            scope.$emit("marker_destroyed", marker)
+          })
+        }
+      }
     }
   }
-
 })
 
+
+
+
+.directive('gmAdd', function() {
+  return {
+    scope: true,
+    restrict: 'EA',
+    link: {
+      pre: function (scope, element, attrs) {
+
+        scope.safeApply = function(fn) {
+          var phase = scope.$root.$$phase
+          if(phase == '$apply' || phase == '$digest') {
+            if(fn && (typeof(fn) === 'function')) {
+              fn()
+            }
+          } else {
+            scope.$apply(fn)
+          }
+        }
+        
+        angular.forEach(scope.$eval(attrs.gmListeners), function (listener, key) {
+          google.maps.event.addListener(scope.$eval(attrs.gmTo), key, function () {
+            scope.safeApply(function () {
+              listener()
+            })
+          })
+        })
+
+        angular.forEach(scope.$eval(attrs.gmListenersOnce), function (listener, key) {
+          google.maps.event.addListenerOnce(scope.$eval(attrs.gmTo), key, function () {
+            scope.safeApply(function () {
+              listener()
+            })
+          })
+        })
+      
+      }
+    }
+  }
+})
