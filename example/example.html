@@ -28,14 +28,18 @@
       
       <h1>gm-google-map Examples</h1>
       
+      
+      
       <h3>Simple map:</h3>
       
-      <div class="example">      
+      <div class="example">  
 <div gm-map-canvas
      gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
      gm-zoom="7"
      style="margin: 0; padding:0; height: 400px; width: 400px;"></div>
       </div>
+      
+      
       
       <h3>Controls:</h3>
       
@@ -45,14 +49,16 @@
        gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
        gm-zoom="7"
        style="margin: 0; padding:0; height: 400px; width: 400px;"></div>
-  <gm-controls>
+  <gm-add-ons>
     <button gm-control gm-position="LEFT_TOP" type="button" class="btn btn-default" style="margin: 10px" >LEFT_TOP</button>
     <button gm-control gm-position="RIGHT_TOP" type="button" class="btn btn-default" style="margin: 10px" >RIGHT_TOP</button>
-  </gm-controls>
+  </gm-add-ons>
 </gm-map-context>
       </div>
       
-      <h3>Markers:</h3>
+      
+      
+      <h3>Markers and Info Windows:</h3>
       
       <div class="example">
 <gm-map-context>
@@ -60,19 +66,21 @@
        gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
        gm-zoom="7"
        style="margin: 0; padding:0; height: 400px; width: 400px;"></div>
-  <gm-marker 
-      gm-title="'Marker 1'"
-      gm-lat="53.4152431"
-      gm-lng="-7.2390307"
-      />
-  <gm-marker 
-      gm-title="'Marker 2'"
-      gm-lat="53.4152431"
-      gm-lng="-9.2390307"
-      />
+  <gm-add-ons>
+    <gm-marker ng-repeat="i in [1,2,3]"
+        gm-title="'Marker {{i}}'"
+        gm-lat="53.4152431"
+        gm-lng="-6.2390307 - i"
+        >
+      <div gm-info-window>
+        <gm-add gm-to="getMarker()" gm-listeners="{ click: openInfoWindow }"></gm-add>
+        <p>Info Window {{i}} Content</p>
+      </div>
+    </gm-marker>        
+  </gm-add-ons>
 </gm-map-context>
       </div>      
-      
+            
 
     </div>
     
