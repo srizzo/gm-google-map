@@ -94,12 +94,13 @@ angular.module('gm-google-map', [])
 /**
  * @description
  *
- * The only purpose of the gmControls directive is to group gmControl directives / dom elements into a hidden element, preventing them from being displayed outside the map
+ * The sole purpose of the gmAddOns directive is to group gm-* directives / dom elements into a hidden element, preventing them from being displayed outside the map canvas
  *
  */
-.directive('gmControls', function() {
+.directive('gmAddOns', function() {
   return {
     scope: false,
+    restrict: 'EA',
     require: '^gmMapContext',
     compile: function (element) {
       element.hide()
