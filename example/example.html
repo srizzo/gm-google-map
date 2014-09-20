@@ -28,7 +28,7 @@
       
       <h1>gm-google-map Examples</h1>
       
-      <h2>Simple map:</h2>
+      <h3>Simple map:</h3>
       
       <div class="example">      
 <div gm-map-canvas
@@ -37,26 +37,48 @@
      style="margin: 0; padding:0; height: 400px; width: 400px;"></div>
       </div>
       
-      <h2>Controls:</h2>
+      <h3>Controls:</h3>
       
       <div class="example">
 <gm-map-context>
-
   <div gm-map-canvas
        gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
        gm-zoom="7"
        style="margin: 0; padding:0; height: 400px; width: 400px;"></div>
-
   <gm-controls>
     <button gm-control gm-position="LEFT_TOP" type="button" class="btn btn-default" style="margin: 10px" >LEFT_TOP</button>
     <button gm-control gm-position="RIGHT_TOP" type="button" class="btn btn-default" style="margin: 10px" >RIGHT_TOP</button>
   </gm-controls>
-
 </gm-map-context>
       </div>
       
+      <h3>Markers:</h3>
+      
+      <div class="example">
+<gm-map-context>
+  <div gm-map-canvas
+       gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
+       gm-zoom="7"
+       style="margin: 0; padding:0; height: 400px; width: 400px;"></div>
+  <gm-marker 
+      gm-title="'Marker 1'"
+      gm-lat="53.4152431"
+      gm-lng="-7.2390307"
+      />
+  <gm-marker 
+      gm-title="'Marker 2'"
+      gm-lat="53.4152431"
+      gm-lng="-9.2390307"
+      />
+</gm-map-context>
+      </div>      
+      
 
     </div>
+    
+    <p>
+      
+    </p>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
