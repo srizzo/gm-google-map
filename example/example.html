@@ -36,26 +36,10 @@
 <div gm-map-canvas
      gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
      gm-zoom="7"
-     style="margin: 0; padding:0; height: 400px; width: 400px;"></div>
+     style="height: 400px; width: 400px;"></div>
       </div>
-      
-      
-      
-      <h3>Controls:</h3>
-      
-      <div class="example">
-<gm-map-context>
-  <div gm-map-canvas
-       gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
-       gm-zoom="7"
-       style="margin: 0; padding:0; height: 400px; width: 400px;"></div>
-  <gm-add-ons>
-    <button gm-control gm-position="LEFT_TOP" type="button" class="btn btn-default" style="margin: 10px" >LEFT_TOP</button>
-    <button gm-control gm-position="RIGHT_TOP" type="button" class="btn btn-default" style="margin: 10px" >RIGHT_TOP</button>
-  </gm-add-ons>
-</gm-map-context>
-      </div>
-      
+
+
       
       
       <h3>Markers and Info Windows:</h3>
@@ -65,7 +49,7 @@
   <div gm-map-canvas
        gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
        gm-zoom="7"
-       style="margin: 0; padding:0; height: 400px; width: 400px;"></div>
+       style="height: 400px; width: 400px;"></div>
   <gm-add-ons>
     <gm-marker ng-repeat="i in [1,2,3]"
         gm-title="'Marker {{i}}'"
@@ -90,7 +74,7 @@
   <div gm-map-canvas
        gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
        gm-zoom="7"
-       style="margin: 0; padding:0; height: 400px; width: 400px;"></div>
+       style="height: 400px; width: 400px;"></div>
   <gm-add-ons>
     <gm-overlapping-marker-spiderfier>
       <gm-marker ng-repeat="i in [1,2,3]"
@@ -107,6 +91,25 @@
 </gm-map-context>
       </div>      
             
+
+      
+      
+      
+      <h3>Controls:</h3>
+      
+      <div class="example">
+<gm-map-context>
+  <div gm-map-canvas
+       gm-disable-default-ui="true"
+       gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
+       gm-zoom="7"
+       style="height: 400px; width: 400px;"></div>
+  <gm-add-ons>
+    <button gm-control gm-position="LEFT_TOP" type="button" class="btn btn-default" style="margin: 10px" >LEFT_TOP</button>
+    <button gm-control gm-position="RIGHT_TOP" type="button" class="btn btn-default" style="margin: 10px" >RIGHT_TOP</button>
+  </gm-add-ons>
+</gm-map-context>
+      </div>
 
 
     </div>
