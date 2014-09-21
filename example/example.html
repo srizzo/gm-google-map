@@ -109,6 +109,47 @@
     <button gm-control gm-position="RIGHT_TOP" type="button" class="btn btn-default" style="margin: 10px" >RIGHT_TOP</button>
   </gm-add-ons>
 </gm-map-context>
+      </div>      
+      
+      
+      <h3>A more complex example:</h3>
+      
+      <div class="example">
+<gm-map-context ng-controller="MarkersController">
+  <div gm-map-canvas
+       gm-disable-default-ui="true"
+       gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
+       gm-zoom="7"
+       style="height: 400px; width: 400px;"></div>
+  <gm-add-ons>
+    <button gm-control ng-controller="AddMarkerController" ng-click="addMarker()" gm-position="LEFT_TOP" type="button" class="btn btn-primary" style="margin: 10px" >Add marker</button>
+    <gm-overlapping-marker-spiderfier>
+      <gm-marker ng-repeat="marker in markers"
+          gm-title="'Marker at {{marker.lat}}, {{marker.lng}}'"
+          gm-position="{ lat: marker.lat, lng: marker.lng }"
+          gm-icon="'icon.png'"
+          >
+        <div gm-info-window>
+          <p>Marker at {{marker.lat}}, {{marker.lng}}</p>
+          <gm-add-listeners gm-to="getMarker()" gm-listeners="{ gm_oms_click: openInfoWindow }"></gm-add-listeners>
+        </div>
+      </gm-marker>
+    </gm-overlapping-marker-spiderfier>
+  </gm-add-ons>
+</gm-map-context>
+<script type="text/javascript">
+  function MarkersController($scope) {
+    $scope.markers = [{ lat: 53.4152431, lng: -8.2390307 }]
+  }
+  function AddMarkerController($scope) {
+    $scope.addMarker = function () {
+      var rndLat = Math.random()
+      var rndLng = Math.random()
+      $scope.markers.push({ lat: 53.4152431 + rndLat, lng: -8.2390307 + rndLng })
+    }
+  }
+</script>
+
       </div>
 
 
