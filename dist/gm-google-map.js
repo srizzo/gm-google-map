@@ -1,4 +1,13 @@
+/*! gm-google-map - v0.0.1 - 2014-09-21
+* https://github.com/srizzo/gm-google-map
+* Copyright (c) 2014 Samuel Rizzo; Licensed MIT */
 angular.module('gm-google-map', [])
+/**
+ * @description
+ *
+ * Shared map context. Publishes $scope.setMap(map) and $scope.getMap().
+ *
+ */
 .directive('gmMapContext', function() {
   return {
     scope: true,
@@ -14,6 +23,13 @@ angular.module('gm-google-map', [])
     }
   }
 })
+
+/**
+ * @description
+ *
+ * Map Canvas. Publishes the map instance if $scope.setMap(map) is available.
+ *
+ */
 .directive('gmMapCanvas', function() {
   return {
     scope: true,
@@ -99,7 +115,6 @@ angular.module('gm-google-map', [])
   return {
     scope: true,
     restrict: 'EA',
-    require: '^gmMapContext',
     compile: function (element) {
       element.hide()
     }
@@ -147,9 +162,15 @@ angular.module('gm-google-map', [])
     }
   }
 })
+
+/**
+ * @description
+ *
+ * InfoWindow. Expects $scope.getMap() and $scope.getMarker() to be available. Publishes $scope.openInfoWindow() and $scope.closeInfoWindow().
+ *
+ */
 .directive('gmInfoWindow', function() {
   return {
-    require: '^gmMapContext',
     scope: true,
     compile: function() {
       return {
@@ -179,11 +200,18 @@ angular.module('gm-google-map', [])
     }
   }
 })
+/**
+ * @description
+ *
+ * Overlapping Marker Spiderfier. Expects $scope.getMap() to be available. Publishes $scope.getOverlappingMarkerSpiderfier(). Triggers gm_oms_click google maps event when a marker is clicked.
+ *
+ * Requires https://cdn.rawgit.com/srizzo/OverlappingMarkerSpiderfier/0.3.3/dist/oms.min.js
+ *
+ */
 .directive('gmOverlappingMarkerSpiderfier', function() {
   return {
     restrict: 'AE',
     scope: true,
-    require: '^gmMapContext',
     link: function(scope, element) {
 
       element.hide()
@@ -213,11 +241,17 @@ angular.module('gm-google-map', [])
     }
   }
 })
+
+/**
+ * @description
+ *
+ * Marker. Expects $scope.getMap() to be available.  Publishes $scope.getMarker(). Emits gm_marker_created and gm_marker_destroyed angularjs events.
+ *
+ */
 .directive('gmMarker', function() {
   return {
     restrict: 'AE',
     scope: true,
-    require: '^gmMapContext',
     compile: function() {
       return {
         pre: function(scope, element, attrs) {
@@ -279,9 +313,12 @@ angular.module('gm-google-map', [])
   }
 })
 
-
-
-
+/**
+ * @description
+ *
+ * Adds listeners to google maps objects.
+ *
+ */
 .directive('gmAddListeners', function() {
   return {
     scope: true,
