@@ -12,7 +12,7 @@ angular.module('gm-google-map', [])
   return {
     scope: true,
     restrict: 'EA',
-    controller: function ($scope) {
+    controller: ["$scope", function ($scope) {
       var _map;
       $scope.setMap = function (map) {
         _map = map
@@ -20,7 +20,7 @@ angular.module('gm-google-map', [])
       $scope.getMap = function () {
         return _map
       }
-    }
+    }]
   }
 })
 
