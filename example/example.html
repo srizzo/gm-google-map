@@ -70,10 +70,10 @@
     <gm-marker ng-repeat="i in [1,2,3]"
         gm-title="'Marker {{i}}'"
         gm-lat="53.4152431"
-        gm-lng="-6.2390307 - i"
+        gm-lng="-10.2390307 + i"
         >
       <div gm-info-window>
-        <gm-add gm-to="getMarker()" gm-listeners="{ click: openInfoWindow }"></gm-add>
+        <gm-add-listeners gm-to="getMarker()" gm-listeners="{ click: openInfoWindow }"></gm-add-listeners>
         <p>Info Window {{i}} Content</p>
       </div>
     </gm-marker>        
@@ -82,20 +82,51 @@
       </div>      
             
 
+
+
+      <h3>Overlapping Marker Spiderfier:</h3>
+      
+      <div class="example">
+<gm-map-context>
+  <div gm-map-canvas
+       gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
+       gm-zoom="7"
+       style="margin: 0; padding:0; height: 400px; width: 400px;"></div>
+  <gm-add-ons>
+    <gm-overlapping-marker-spiderfier>
+      <gm-marker ng-repeat="i in [1,2,3]"
+          gm-title="'Marker {{i}}'"
+          gm-lat="53.4152431"
+          gm-lng="-8.2390307"
+          >
+        <div gm-info-window>
+          <p>Info Window {{i}} Content</p>
+          <gm-add-listeners gm-to="getMarker()" gm-listeners="{ gm_oms_click: openInfoWindow }"></gm-add-listeners>
+        </div>
+      </gm-marker>
+    </gm-overlapping-marker-spiderfier>
+  </gm-add-ons>
+</gm-map-context>
+      </div>      
+            
+
+
     </div>
     
     <p>
       
     </p>
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBdLDmkfGQX8CTFaSBsOuQEpPhoSKCdi34&sensor=true"></script>
 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
+
+    <script src="http://jawj.github.io/OverlappingMarkerSpiderfier/bin/oms.min.js"></script>
     
     <script src="../dist/gm-google-map.js"></script>
 
