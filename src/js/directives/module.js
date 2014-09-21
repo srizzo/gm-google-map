@@ -224,7 +224,8 @@ angular.module('gm-google-map', [])
             data: scope.$eval(attrs.gmData),
             title: scope.$eval(attrs.gmTitle),
             optimized: scope.$eval(attrs.gmOptimized),
-            position: new google.maps.LatLng(scope.$eval(attrs.gmLat), scope.$eval(attrs.gmLng))
+            position: new google.maps.LatLng(scope.$eval(attrs.gmPosition).lat, scope.$eval(attrs.gmPosition).lng)
+            
           })
 
           scope.getMarker = function () {
@@ -242,6 +243,33 @@ angular.module('gm-google-map', [])
             marker.setMap(null)
             scope.$emit("gm_marker_destroyed", marker)
           })
+          
+          scope.safeApply = function(fn) {
+            var phase = scope.$root.$$phase
+            if(phase == '$apply' || phase == '$digest') {
+              if(fn && (typeof(fn) === 'function')) {
+                fn()
+              }
+            } else {
+              scope.$apply(fn)
+            }
+          }
+          
+          angular.forEach(scope.$eval(attrs.gmListeners), function (listener, key) {
+            google.maps.event.addListener(marker, key, function () {
+              scope.safeApply(function () {
+                listener()
+              })
+            })
+          })
+
+          angular.forEach(scope.$eval(attrs.gmListenersOnce), function (listener, key) {
+            google.maps.event.addListenerOnce(marker, key, function () {
+              scope.safeApply(function () {
+                listener()
+              })
+            })
+          })          
         }
       }
     }

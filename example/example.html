@@ -69,8 +69,7 @@
   <gm-add-ons>
     <gm-marker ng-repeat="i in [1,2,3]"
         gm-title="'Marker {{i}}'"
-        gm-lat="53.4152431"
-        gm-lng="-10.2390307 + i"
+        gm-position="{ lat: 53.4152431, lng: (-10.2390307 + i) }"
         >
       <div gm-info-window>
         <gm-add-listeners gm-to="getMarker()" gm-listeners="{ click: openInfoWindow }"></gm-add-listeners>
@@ -96,8 +95,7 @@
     <gm-overlapping-marker-spiderfier>
       <gm-marker ng-repeat="i in [1,2,3]"
           gm-title="'Marker {{i}}'"
-          gm-lat="53.4152431"
-          gm-lng="-8.2390307"
+          gm-position="{ lat: 53.4152431, lng: -8.2390307 }"
           >
         <div gm-info-window>
           <p>Info Window {{i}} Content</p>
@@ -133,7 +131,7 @@
     <script type="text/javascript">
 
       $(".example").each(function () {
-        $(this).before($("<pre></pre>").addClass("prettyprint")
+        $(this).before($("<pre ng-non-bindable></pre>").addClass("prettyprint")
                                        .addClass("lang-html")
                                        .addClass("linenums")
                                        .text($.trim($(this).html())))
