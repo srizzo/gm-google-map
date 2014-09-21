@@ -181,25 +181,29 @@ angular.module('gm-google-map', [])
     restrict: 'AE',
     scope: true,
     require: '^gmMapContext',
-    link: function(scope, element, attrs) {
+    link: function(scope, element) {
 
       element.hide()
 
       var oms = new OverlappingMarkerSpiderfier(scope.getMap(), {
         keepSpiderfied: true
       })
+      
+      scope.getOverlappingMarkerSpiderfier = function () {
+        return oms
+      }
 
-      scope.$on("marker_created", function (event, marker) {
+      scope.$on("gm_marker_created", function (event, marker) {
         oms.addMarker(marker)
       })
 
-      scope.$on("marker_destroyed", function (event, marker) {
+      scope.$on("gm_marker_destroyed", function (event, marker) {
         oms.removeMarker(marker)
       })
 
-      oms.addListener('click', function(marker) {
+      oms.addListener('click', function(marker, event) {
         scope.$apply(function() {
-          scope.$eval(attrs.gmClick, { marker: marker })
+          google.maps.event.trigger(marker, "gm_oms_click", event)
         })
       })
 
@@ -231,12 +235,12 @@ angular.module('gm-google-map', [])
             marker.setIcon(current)
           })
 
-          scope.$emit("marker_created", marker)
+          scope.$emit("gm_marker_created", marker)
 
           scope.$on("$destroy", function() {
             unbindIconWatch()
             marker.setMap(null)
-            scope.$emit("marker_destroyed", marker)
+            scope.$emit("gm_marker_destroyed", marker)
           })
         }
       }
@@ -247,7 +251,7 @@ angular.module('gm-google-map', [])
 
 
 
-.directive('gmAdd', function() {
+.directive('gmAddListeners', function() {
   return {
     scope: true,
     restrict: 'EA',
@@ -266,7 +270,7 @@ angular.module('gm-google-map', [])
         }
         
         angular.forEach(scope.$eval(attrs.gmListeners), function (listener, key) {
-          google.maps.event.addListener(scope.$eval(attrs.gmTo), key, function () {
+          scope.$eval(attrs.gmTo).addListener(key, function () {
             scope.safeApply(function () {
               listener()
             })
@@ -274,7 +278,7 @@ angular.module('gm-google-map', [])
         })
 
         angular.forEach(scope.$eval(attrs.gmListenersOnce), function (listener, key) {
-          google.maps.event.addListenerOnce(scope.$eval(attrs.gmTo), key, function () {
+          scope.$eval(attrs.gmTo).addListenerOnce(key, function () {
             scope.safeApply(function () {
               listener()
             })
