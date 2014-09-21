@@ -8,3 +8,7 @@ gm-google-map is a tiny library for using Google Maps with AngularJS, extracted 
 Please, have a look at the examples at [http://srizzo.github.io/gm-google-map/](http://srizzo.github.io/gm-google-map/)
 
 
+## Download
+
+You can download the latest, minified version at [http://raw.githubusercontent.com/srizzo/gm-google-map/master/dist/gm-google-map.min.js](http://raw.githubusercontent.com/srizzo/gm-google-map/master/dist/gm-google-map.min.js).
+
