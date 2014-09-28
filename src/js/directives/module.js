@@ -67,7 +67,7 @@ angular.module('gm-google-map', [])
               return
             }
             map.setCenter(new google.maps.LatLng(current.lat, current.lng))
-          })
+          }, true)
         }
 
         scope.safeApply = function(fn) {
@@ -147,12 +147,14 @@ angular.module('gm-google-map', [])
             map.controls[google.maps.ControlPosition[position]].push(domElement)
           }
 
-          scope.$watch(attrs.gmVisible, function(current) {
-            if (current === true)
-              scope.show()
-            else
-              scope.hide()
-          })
+          if (attrs.gmVisible) {
+            scope.$watch(attrs.gmVisible, function(current) {
+              if (current === true)
+                scope.show()
+              else
+                scope.hide()
+            })
+          }
 
         }
       }
@@ -266,9 +268,11 @@ angular.module('gm-google-map', [])
             return marker
           }
 
-          var unbindIconWatch = scope.$watch(attrs.gmIcon, function(current) {
-            marker.setIcon(current)
-          })
+          if (attrs.gmIcon) {
+            var unbindIconWatch = scope.$watch(attrs.gmIcon, function(current) {
+              marker.setIcon(current)
+            })
+          }
 
           scope.$emit("gm_marker_created", marker)
 
