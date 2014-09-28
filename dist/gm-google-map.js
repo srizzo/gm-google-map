@@ -1,4 +1,4 @@
-/*! gm-google-map - v0.0.2 - 2014-09-28
+/*! gm-google-map - v0.0.3 - 2014-09-28
 * https://github.com/srizzo/gm-google-map
 * Copyright (c) 2014 Samuel Rizzo; Licensed MIT */
 angular.module('gm-google-map', [])
