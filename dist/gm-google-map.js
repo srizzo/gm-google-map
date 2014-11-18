@@ -1,4 +1,7 @@
-/*! gm-google-map - v0.0.3 - 2014-09-28
+/*! gm-google-map - v0.0.3 - 2014-11-18
+* https://github.com/srizzo/gm-google-map
+* Copyright (c) 2014 Samuel Rizzo; Licensed MIT */
+/*! gm-google-map - v0.0.3 - 2014-11-16
 * https://github.com/srizzo/gm-google-map
 * Copyright (c) 2014 Samuel Rizzo; Licensed MIT */
 angular.module('gm-google-map', [])
@@ -43,7 +46,7 @@ angular.module('gm-google-map', [])
         if (attrs.gmDisableDefaultUi)
           disableDefaultUI = scope.$eval(attrs.gmDisableDefaultUi)
 
-        var map = new google.maps.Map(element.get(0), {
+        var map = new google.maps.Map(element[0], {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           disableDefaultUI: disableDefaultUI,
           styles: [
@@ -116,7 +119,7 @@ angular.module('gm-google-map', [])
     scope: true,
     restrict: 'EA',
     compile: function (element) {
-      element.hide()
+      element.css("display", "none")
     }
   }
 })
@@ -131,7 +134,7 @@ angular.module('gm-google-map', [])
       return {
         pre: function(scope, element, attrs) {
 
-          var domElement = element.get(0)
+          var domElement = element[0]
 
           var map = scope.getMap()
 
@@ -177,7 +180,7 @@ angular.module('gm-google-map', [])
     compile: function() {
       return {
         pre: function(scope, element, attrs) {
-          var domElement = element.get(0)
+          var domElement = element[0]
 
           var infoWindow = new google.maps.InfoWindow()
           infoWindow.setContent(domElement)
@@ -216,7 +219,7 @@ angular.module('gm-google-map', [])
     scope: true,
     link: function(scope, element) {
 
-      element.hide()
+      element.css("display", "none")
 
       var oms = new OverlappingMarkerSpiderfier(scope.getMap(), {
         keepSpiderfied: true

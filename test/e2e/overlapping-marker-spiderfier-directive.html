@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html ng-app="test">
+  <body>
+
+    <gm-map-context>
+      <div gm-map-canvas="" gm-center="{ lat: 53.4152431, lng: -8.2390307 }" gm-zoom="7" style="height: 400px; width: 400px;"></div>
+      <gm-add-ons>
+        <gm-overlapping-marker-spiderfier>
+          <gm-marker ng-repeat="i in [1,2,3]" gm-title="'Marker {{i}}'" gm-position="{ lat: 53.4152431, lng: -8.2390307 }" gm-optimized="false">
+            <div gm-info-window="">
+              <p>Info Window {{i}} Content</p>
+              <gm-add-listeners gm-to="getMarker()" gm-listeners="{ gm_oms_click: openInfoWindow }"></gm-add-listeners>
+            </div>
+          </gm-marker>
+        </gm-overlapping-marker-spiderfier>
+      </gm-add-ons>
+    </gm-map-context>
+    
+    <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true"></script>
+    <script src="https://cdn.rawgit.com/srizzo/OverlappingMarkerSpiderfier/0.3.3/dist/oms.min.js"></script>    
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+    <script src="../../../dist/gm-google-map.js"></script>
+    <script type="text/javascript">
+      angular.module("test", ["gm-google-map"])
+    </script>
+    
+  </body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="test">
+  <body ng-controller="TestController">
+    <div id="map" gm-map-canvas
+      gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
+      gm-zoom="7"
+      style="height: 400px; width: 400px;">
+    </div>
+    
+    <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+    <script src="../../../dist/gm-google-map.min.js"></script>
+    <script type="text/javascript">
+      angular.module("test", ["gm-google-map"])
+    
+      function TestController($scope) {
+        $scope.setMap = function (map) {
+          $scope._map = map;
+        }
+        $scope.getMap = function () {
+          return $scope._map;
+        }
+      }
+    </script>
+    
+  </body>
+</html>

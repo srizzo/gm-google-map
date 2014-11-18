@@ -55,32 +55,47 @@ module.exports = function(grunt) {
         src: 'Gruntfile.js'
       },
       lib_test: {
-        src: ['src/**/*.js', 'test/**/*.js']
+        src: ['src/**/*.js']
       }
     },
-    qunit: {
-      files: ['test/**/*.html']
-    },
-    watch: {
-      gruntfile: {
-        files: '<%= jshint.gruntfile.src %>',
-        tasks: ['jshint:gruntfile']
+    connect: {
+      server: {
+        options: {
+          port: 8001
+        }
+      }
+    },    
+    protractor: {
+      options: {
+        configFile: "node_modules/protractor/referenceConf.js", // Default config file
+        keepAlive: true, // If false, the grunt process stops when the test fails.
+        noColor: false, // If true, protractor will not use colors in its output.
+        args: {}
       },
-      lib_test: {
-        files: '<%= jshint.lib_test.src %>',
-        tasks: ['jshint:lib_test', 'qunit']
+      default: {
+        options: {
+          configFile: "protractor.conf.js",
+          args: {} 
+        }
+      },
+      debug: {
+        options: {
+          configFile: "protractor.conf.js",
+          debug: true,
+          args: {}
+        }
       }
     }
   });
 
-  // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-
-  // Default task.
-  grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
+  grunt.loadNpmTasks('grunt-protractor-runner');
+  grunt.loadNpmTasks('grunt-contrib-connect');  
+  
+  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'connect', 'protractor:default']);
+  grunt.registerTask('debug', ['jshint', 'concat', 'uglify', 'connect', 'protractor:debug']);
 
 };
