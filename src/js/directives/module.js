@@ -40,7 +40,7 @@ angular.module('gm-google-map', [])
         if (attrs.gmDisableDefaultUi)
           disableDefaultUI = scope.$eval(attrs.gmDisableDefaultUi)
 
-        var map = new google.maps.Map(element[0], {
+        var _map = new google.maps.Map(element[0], {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           disableDefaultUI: disableDefaultUI,
           styles: [
@@ -52,12 +52,21 @@ angular.module('gm-google-map', [])
           ]
         })
         
+        if (!scope.setMap) {
+          scope.setMap = function (map) {
+            _map = map
+          }
+          scope.getMap = function () {
+            return _map
+          }
+        }
+        
         if (scope.setMap)
-          scope.setMap(map)
+          scope.setMap(_map)
 
         if (attrs.gmZoom) {
           scope.$watch(attrs.gmZoom, function(current) {
-            map.setZoom(current)
+            _map.setZoom(current)
           })
         }
 
@@ -66,7 +75,7 @@ angular.module('gm-google-map', [])
             if (current == null) {
               return
             }
-            map.setCenter(new google.maps.LatLng(current.lat, current.lng))
+            _map.setCenter(new google.maps.LatLng(current.lat, current.lng))
           }, true)
         }
 
@@ -82,7 +91,7 @@ angular.module('gm-google-map', [])
         }
 
         angular.forEach(scope.$eval(attrs.gmListeners), function (listener, key) {
-          google.maps.event.addListener(map, key, function () {
+          google.maps.event.addListener(_map, key, function () {
             scope.safeApply(function () {
               listener()
             })
@@ -90,7 +99,7 @@ angular.module('gm-google-map', [])
         })
 
         angular.forEach(scope.$eval(attrs.gmListenersOnce), function (listener, key) {
-          google.maps.event.addListenerOnce(map, key, function () {
+          google.maps.event.addListenerOnce(_map, key, function () {
             scope.safeApply(function () {
               listener()
             })

@@ -147,18 +147,6 @@
     </gm-overlapping-marker-spiderfier>
   </gm-add-ons>
 </gm-map-context>
-<script type="text/javascript">
-  function MarkersController($scope) {
-    $scope.markers = [{ lat: 53.4152431, lng: -8.2390307 }]
-  }
-  function AddMarkerController($scope) {
-    $scope.addMarker = function () {
-      var rndLat = Math.random()
-      var rndLng = Math.random()
-      $scope.markers.push({ lat: 53.4152431 + rndLat, lng: -8.2390307 + rndLng })
-    }
-  }
-</script>
 
       </div>
 
@@ -172,7 +160,7 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true"></script>
 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
@@ -183,7 +171,6 @@
     <script src="../dist/gm-google-map.min.js"></script>
 
     <script type="text/javascript">
-
       $(".example").each(function () {
         $(this).before($("<pre ng-non-bindable></pre>").addClass("prettyprint")
                                        .addClass("lang-html")
@@ -194,6 +181,16 @@
       
     <script type="text/javascript">
       angular.module("examples", ["gm-google-map"])
+      .controller('MarkersController', function($scope) {
+        $scope.markers = [{ lat: 53.4152431, lng: -8.2390307 }]
+      })
+      .controller('AddMarkerController', function($scope) {
+        $scope.addMarker = function () {
+          var rndLat = Math.random()
+          var rndLng = Math.random()
+          $scope.markers.push({ lat: 53.4152431 + rndLat, lng: -8.2390307 + rndLng })
+        }
+      })      
     </script>
     
   </body>
