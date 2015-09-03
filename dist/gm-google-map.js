@@ -5,7 +5,7 @@ angular.module('gm-google-map', [])
 /**
  * @description
  *
- * Shared map context. Publishes $scope.setMap(map) and $scope.getMap().
+ * Shared map context. Publishes $scope.$setMap(map) and $scope.$getMap().
  *
  */
 .directive('gmMapContext', function() {
@@ -14,10 +14,10 @@ angular.module('gm-google-map', [])
     restrict: 'EA',
     controller: ["$scope", function ($scope) {
       var _map;
-      $scope.setMap = function (map) {
+      $scope.$setMap = function (map) {
         _map = map
       }
-      $scope.getMap = function () {
+      $scope.$getMap = function () {
         return _map
       }
     }]
@@ -27,7 +27,7 @@ angular.module('gm-google-map', [])
 /**
  * @description
  *
- * Map Canvas. Publishes the map instance if $scope.setMap(map) is available.
+ * Map Canvas. Publishes $scope.$setMap(map) and $scope.$getMap().
  *
  */
 .directive('gmMapCanvas', function() {
@@ -55,17 +55,16 @@ angular.module('gm-google-map', [])
           ]
         })
         
-        if (!scope.setMap) {
-          scope.setMap = function (map) {
+        if (!scope.$setMap) {
+          scope.$setMap = function (map) {
             _map = map
           }
-          scope.getMap = function () {
+          scope.$getMap = function () {
             return _map
           }
         }
         
-        if (scope.setMap)
-          scope.setMap(_map)
+        scope.$setMap(_map)
 
         if (attrs.gmZoom) {
           scope.$watch(attrs.gmZoom, function(current) {
@@ -142,17 +141,17 @@ angular.module('gm-google-map', [])
 
           var domElement = element[0]
 
-          var map = scope.getMap()
+          var map = scope.$getMap()
 
           var position = attrs.gmPosition || "LEFT_TOP"
 
-          scope.hide = function() {
+          scope.$hide = function() {
             var index = map.controls[google.maps.ControlPosition[position]].indexOf(domElement)
             if (index > -1)
               map.controls[google.maps.ControlPosition[position]].removeAt(index)
           }
 
-          scope.show = function() {
+          scope.$show = function() {
             
           var index = map.controls[google.maps.ControlPosition[position]].indexOf(domElement)
           if (index < 0)
@@ -162,9 +161,9 @@ angular.module('gm-google-map', [])
           if (attrs.gmVisible) {
             scope.$watch(attrs.gmVisible, function(current) {
               if (current === true)
-                scope.show()
+                scope.$show()
               else
-                scope.hide()
+                scope.$hide()
             })
           }
 
@@ -177,7 +176,7 @@ angular.module('gm-google-map', [])
 /**
  * @description
  *
- * InfoWindow. Expects $scope.getMap() and $scope.getMarker() to be available. Publishes $scope.openInfoWindow() and $scope.closeInfoWindow().
+ * InfoWindow. Expects $scope.$getMap() and $scope.$getMarker() to be available. Publishes $scope.$openInfoWindow() and $scope.$closeInfoWindow().
  *
  */
 .directive('gmInfoWindow', function() {
@@ -199,11 +198,11 @@ angular.module('gm-google-map', [])
             })
           }
 
-          scope.openInfoWindow = function() {
-            infoWindow.open(scope.getMap(), scope.getMarker())
+          scope.$openInfoWindow = function() {
+            infoWindow.open(scope.$getMap(), scope.$getMarker())
           }
 
-          scope.closeInfoWindow = function() {
+          scope.$closeInfoWindow = function() {
             infoWindow.close()
           }
         }
@@ -214,7 +213,7 @@ angular.module('gm-google-map', [])
 /**
  * @description
  *
- * Overlapping Marker Spiderfier. Expects $scope.getMap() to be available. Publishes $scope.getOverlappingMarkerSpiderfier(). Triggers gm_oms_click google maps event when a marker is clicked.
+ * Overlapping Marker Spiderfier. Expects $scope.$getMap() to be available. Publishes $scope.$getOverlappingMarkerSpiderfier(). Triggers gm_oms_click google maps event when a marker is clicked.
  *
  * Requires https://cdn.rawgit.com/srizzo/OverlappingMarkerSpiderfier/0.3.3/dist/oms.min.js
  *
@@ -227,11 +226,11 @@ angular.module('gm-google-map', [])
 
       element.css("display", "none")
 
-      var oms = new OverlappingMarkerSpiderfier(scope.getMap(), {
+      var oms = new OverlappingMarkerSpiderfier(scope.$getMap(), {
         keepSpiderfied: true
       })
       
-      scope.getOverlappingMarkerSpiderfier = function () {
+      scope.$getOverlappingMarkerSpiderfier = function () {
         return oms
       }
 
@@ -256,7 +255,7 @@ angular.module('gm-google-map', [])
 /**
  * @description
  *
- * Marker. Expects $scope.getMap() to be available.  Publishes $scope.getMarker(). Emits gm_marker_created and gm_marker_destroyed angularjs events.
+ * Marker. Expects $scope.$getMap() to be available.  Publishes $scope.$getMarker(). Emits gm_marker_created and gm_marker_destroyed angularjs events.
  *
  */
 .directive('gmMarker', function() {
@@ -268,7 +267,7 @@ angular.module('gm-google-map', [])
         pre: function(scope, element, attrs) {
 
           var marker = new google.maps.Marker({
-            map: scope.getMap(),
+            map: scope.$getMap(),
             data: scope.$eval(attrs.gmData),
             title: scope.$eval(attrs.gmTitle),
             optimized: scope.$eval(attrs.gmOptimized),
@@ -276,7 +275,7 @@ angular.module('gm-google-map', [])
             
           })
 
-          scope.getMarker = function () {
+          scope.$getMarker = function () {
             return marker
           }
 
@@ -290,7 +289,7 @@ angular.module('gm-google-map', [])
 
           scope.$on("$destroy", function() {
             unbindIconWatch()
-            marker.setMap(null)
+            marker.$setMap(null)
             scope.$emit("gm_marker_destroyed", marker)
           })
           
@@ -350,19 +349,15 @@ angular.module('gm-google-map', [])
           }
         }
         
-        angular.forEach(scope.$eval(attrs.gmListeners), function (listener, key) {
+        angular.forEach(scope.$eval(attrs.gmListeners), function (callback, key) {
           scope.$eval(attrs.gmTo).addListener(key, function () {
-            scope.safeApply(function () {
-              listener()
-            })
+            scope.$eval(callback)
           })
         })
 
-        angular.forEach(scope.$eval(attrs.gmListenersOnce), function (listener, key) {
+        angular.forEach(scope.$eval(attrs.gmListenersOnce), function (callback, key) {
           scope.$eval(attrs.gmTo).addListenerOnce(key, function () {
-            scope.safeApply(function () {
-              listener()
-            })
+            scope.$eval(callback)
           })
         })
       

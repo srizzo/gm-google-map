@@ -58,7 +58,7 @@
         gm-position="{ lat: 53.4152431, lng: (-10.2390307 + i) }"
         >
       <div gm-info-window>
-        <gm-add-listeners gm-to="getMarker()" gm-listeners="{ click: openInfoWindow }"></gm-add-listeners>
+        <gm-add-listeners gm-to="$getMarker()" gm-listeners="{ click: '$openInfoWindow()' }"></gm-add-listeners>
         <p>Info Window {{i}} Content</p>
       </div>
     </gm-marker>        
@@ -89,7 +89,7 @@
           >
         <div gm-info-window>
           <p>Info Window {{i}} Content</p>
-          <gm-add-listeners gm-to="getMarker()" gm-listeners="{ gm_oms_click: openInfoWindow }"></gm-add-listeners>
+          <gm-add-listeners gm-to="$getMarker()" gm-listeners="{ gm_oms_click: '$openInfoWindow()' }"></gm-add-listeners>
         </div>
       </gm-marker>
     </gm-overlapping-marker-spiderfier>
@@ -141,7 +141,7 @@
           >
         <div gm-info-window>
           <p>Marker at {{marker.lat}}, {{marker.lng}}</p>
-          <gm-add-listeners gm-to="getMarker()" gm-listeners="{ gm_oms_click: openInfoWindow }"></gm-add-listeners>
+          <gm-add-listeners gm-to="$getMarker()" gm-listeners="{ gm_oms_click: '$openInfoWindow()' }"></gm-add-listeners>
         </div>
       </gm-marker>
     </gm-overlapping-marker-spiderfier>
@@ -167,8 +167,10 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
 
     <script src="https://cdn.rawgit.com/srizzo/OverlappingMarkerSpiderfier/0.3.3/dist/oms.min.js"></script>
-    
-    <script src="../dist/gm-google-map.min.js"></script>
+    <!--
+      <script src="../dist/gm-google-map.min.js"></script>
+    -->
+    <script src="../src/js/directives/module.js"></script>
 
     <script type="text/javascript">
       $(".example").each(function () {
