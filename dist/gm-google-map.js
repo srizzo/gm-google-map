@@ -40,8 +40,8 @@ angular.module('gm-google-map', [])
 
         var disableDefaultUI = false
         
-        if (attrs.gmDisableDefaultUi)
-          disableDefaultUI = scope.$eval(attrs.gmDisableDefaultUi)
+        if (attrs.disableDefaultUi)
+          disableDefaultUI = scope.$eval(attrs.disableDefaultUi)
 
         var _map = new google.maps.Map(element[0], {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -66,14 +66,14 @@ angular.module('gm-google-map', [])
         
         scope.$setMap(_map)
 
-        if (attrs.gmZoom) {
-          scope.$watch(attrs.gmZoom, function(current) {
+        if (attrs.zoom) {
+          scope.$watch(attrs.zoom, function(current) {
             _map.setZoom(current)
           })
         }
 
-        if (attrs.gmCenter) {
-          scope.$watch(attrs.gmCenter, function(current) {
+        if (attrs.center) {
+          scope.$watch(attrs.center, function(current) {
             if (current == null) {
               return
             }
@@ -92,7 +92,7 @@ angular.module('gm-google-map', [])
           }
         }
 
-        angular.forEach(scope.$eval(attrs.gmListeners), function (listener, key) {
+        angular.forEach(scope.$eval(attrs.listeners), function (listener, key) {
           google.maps.event.addListener(_map, key, function () {
             scope.safeApply(function () {
               listener()
@@ -100,7 +100,7 @@ angular.module('gm-google-map', [])
           })
         })
 
-        angular.forEach(scope.$eval(attrs.gmListenersOnce), function (listener, key) {
+        angular.forEach(scope.$eval(attrs.listenersOnce), function (listener, key) {
           google.maps.event.addListenerOnce(_map, key, function () {
             scope.safeApply(function () {
               listener()
@@ -133,8 +133,8 @@ angular.module('gm-google-map', [])
     scope: true,
     compile: function(element, attrs) {
 
-      if (typeof attrs.gmVisible === 'undefined')
-        attrs.gmVisible = "true"
+      if (typeof attrs.visible === 'undefined')
+        attrs.visible = "true"
 
       return {
         pre: function(scope, element, attrs) {
@@ -143,7 +143,7 @@ angular.module('gm-google-map', [])
 
           var map = scope.$getMap()
 
-          var position = attrs.gmPosition || "LEFT_TOP"
+          var position = attrs.position || "LEFT_TOP"
 
           scope.$hide = function() {
             var index = map.controls[google.maps.ControlPosition[position]].indexOf(domElement)
@@ -158,8 +158,8 @@ angular.module('gm-google-map', [])
             map.controls[google.maps.ControlPosition[position]].push(domElement)
           }
 
-          if (attrs.gmVisible) {
-            scope.$watch(attrs.gmVisible, function(current) {
+          if (attrs.visible) {
+            scope.$watch(attrs.visible, function(current) {
               if (current === true)
                 scope.$show()
               else
@@ -268,10 +268,10 @@ angular.module('gm-google-map', [])
 
           var marker = new google.maps.Marker({
             map: scope.$getMap(),
-            data: scope.$eval(attrs.gmData),
-            title: scope.$eval(attrs.gmTitle),
-            optimized: scope.$eval(attrs.gmOptimized),
-            position: new google.maps.LatLng(scope.$eval(attrs.gmPosition).lat, scope.$eval(attrs.gmPosition).lng)
+            data: scope.$eval(attrs.data),
+            title: scope.$eval(attrs.title),
+            optimized: scope.$eval(attrs.optimized),
+            position: new google.maps.LatLng(scope.$eval(attrs.position).lat, scope.$eval(attrs.position).lng)
             
           })
 
@@ -279,8 +279,8 @@ angular.module('gm-google-map', [])
             return marker
           }
 
-          if (attrs.gmIcon) {
-            var unbindIconWatch = scope.$watch(attrs.gmIcon, function(current) {
+          if (attrs.icon) {
+            var unbindIconWatch = scope.$watch(attrs.icon, function(current) {
               marker.setIcon(current)
             })
           }
@@ -304,7 +304,7 @@ angular.module('gm-google-map', [])
             }
           }
           
-          angular.forEach(scope.$eval(attrs.gmListeners), function (listener, key) {
+          angular.forEach(scope.$eval(attrs.listeners), function (listener, key) {
             google.maps.event.addListener(marker, key, function () {
               scope.safeApply(function () {
                 listener()
@@ -312,7 +312,7 @@ angular.module('gm-google-map', [])
             })
           })
 
-          angular.forEach(scope.$eval(attrs.gmListenersOnce), function (listener, key) {
+          angular.forEach(scope.$eval(attrs.listenersOnce), function (listener, key) {
             google.maps.event.addListenerOnce(marker, key, function () {
               scope.safeApply(function () {
                 listener()
@@ -349,14 +349,14 @@ angular.module('gm-google-map', [])
           }
         }
         
-        angular.forEach(scope.$eval(attrs.gmListeners), function (callback, key) {
-          scope.$eval(attrs.gmTo).addListener(key, function () {
+        angular.forEach(scope.$eval(attrs.listeners), function (callback, key) {
+          scope.$eval(attrs.to).addListener(key, function () {
             scope.$eval(callback)
           })
         })
 
-        angular.forEach(scope.$eval(attrs.gmListenersOnce), function (callback, key) {
-          scope.$eval(attrs.gmTo).addListenerOnce(key, function () {
+        angular.forEach(scope.$eval(attrs.listenersOnce), function (callback, key) {
+          scope.$eval(attrs.to).addListenerOnce(key, function () {
             scope.$eval(callback)
           })
         })

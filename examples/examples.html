@@ -36,8 +36,8 @@
       
       <div class="example">  
 <div gm-map-canvas
-     gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
-     gm-zoom="7"
+     center="{ lat: 53.4152431, lng: -8.2390307 }"
+     zoom="7"
      style="height: 400px; width: 400px;"></div>
       </div>
 
@@ -49,16 +49,16 @@
       <div class="example">
 <gm-map-context>
   <div gm-map-canvas
-       gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
-       gm-zoom="7"
+       center="{ lat: 53.4152431, lng: -8.2390307 }"
+       zoom="7"
        style="height: 400px; width: 400px;"></div>
   <gm-add-ons>
     <gm-marker ng-repeat="i in [1,2,3]"
-        gm-title="'Marker {{i}}'"
-        gm-position="{ lat: 53.4152431, lng: (-10.2390307 + i) }"
+        title="'Marker {{i}}'"
+        position="{ lat: 53.4152431, lng: (-10.2390307 + i) }"
         >
       <div gm-info-window>
-        <gm-add-listeners gm-to="$getMarker()" gm-listeners="{ click: '$openInfoWindow()' }"></gm-add-listeners>
+        <gm-add-listeners to="$getMarker()" listeners="{ click: '$openInfoWindow()' }"></gm-add-listeners>
         <p>Info Window {{i}} Content</p>
       </div>
     </gm-marker>        
@@ -78,18 +78,18 @@
       <div class="example">
 <gm-map-context>
   <div gm-map-canvas
-       gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
-       gm-zoom="7"
+       center="{ lat: 53.4152431, lng: -8.2390307 }"
+       zoom="7"
        style="height: 400px; width: 400px;"></div>
   <gm-add-ons>
     <gm-overlapping-marker-spiderfier>
       <gm-marker ng-repeat="i in [1,2,3]"
-          gm-title="'Marker {{i}}'"
-          gm-position="{ lat: 53.4152431, lng: -8.2390307 }"
+          title="'Marker {{i}}'"
+          position="{ lat: 53.4152431, lng: -8.2390307 }"
           >
         <div gm-info-window>
           <p>Info Window {{i}} Content</p>
-          <gm-add-listeners gm-to="$getMarker()" gm-listeners="{ gm_oms_click: '$openInfoWindow()' }"></gm-add-listeners>
+          <gm-add-listeners to="$getMarker()" listeners="{ gm_oms_click: '$openInfoWindow()' }"></gm-add-listeners>
         </div>
       </gm-marker>
     </gm-overlapping-marker-spiderfier>
@@ -106,13 +106,13 @@
       <div class="example">
 <gm-map-context>
   <div gm-map-canvas
-       gm-disable-default-ui="true"
-       gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
-       gm-zoom="7"
+       disable-default-ui="true"
+       center="{ lat: 53.4152431, lng: -8.2390307 }"
+       zoom="7"
        style="height: 400px; width: 400px;"></div>
   <gm-add-ons>
-    <button gm-control gm-position="LEFT_TOP" type="button" class="btn btn-default" style="margin: 10px" >LEFT_TOP</button>
-    <button gm-control gm-position="RIGHT_TOP" type="button" class="btn btn-default" style="margin: 10px" >RIGHT_TOP</button>
+    <button gm-control position="LEFT_TOP" type="button" class="btn btn-default" style="margin: 10px" >LEFT_TOP</button>
+    <button gm-control position="RIGHT_TOP" type="button" class="btn btn-default" style="margin: 10px" >RIGHT_TOP</button>
   </gm-add-ons>
 </gm-map-context>
       </div>      
@@ -127,21 +127,21 @@
       <div class="example">
 <gm-map-context ng-controller="MarkersController">
   <div gm-map-canvas
-       gm-disable-default-ui="true"
-       gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
-       gm-zoom="7"
+       disable-default-ui="true"
+       center="{ lat: 53.4152431, lng: -8.2390307 }"
+       zoom="7"
        style="height: 400px; width: 400px;"></div>
   <gm-add-ons>
-    <button gm-control ng-controller="AddMarkerController" ng-click="addMarker()" gm-position="LEFT_TOP" type="button" class="btn btn-primary" style="margin: 10px" >Add marker</button>
+    <button gm-control ng-controller="AddMarkerController" ng-click="addMarker()" position="LEFT_TOP" type="button" class="btn btn-primary" style="margin: 10px" >Add marker</button>
     <gm-overlapping-marker-spiderfier>
       <gm-marker ng-repeat="marker in markers"
-          gm-title="'Marker at {{marker.lat}}, {{marker.lng}}'"
-          gm-position="{ lat: marker.lat, lng: marker.lng }"
-          gm-icon="'icon.png'"
+          title="'Marker at {{marker.lat}}, {{marker.lng}}'"
+          position="{ lat: marker.lat, lng: marker.lng }"
+          icon="'icon.png'"
           >
         <div gm-info-window>
           <p>Marker at {{marker.lat}}, {{marker.lng}}</p>
-          <gm-add-listeners gm-to="$getMarker()" gm-listeners="{ gm_oms_click: '$openInfoWindow()' }"></gm-add-listeners>
+          <gm-add-listeners to="$getMarker()" listeners="{ gm_oms_click: '$openInfoWindow()' }"></gm-add-listeners>
         </div>
       </gm-marker>
     </gm-overlapping-marker-spiderfier>

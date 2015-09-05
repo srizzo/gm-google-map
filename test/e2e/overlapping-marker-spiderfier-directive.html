@@ -3,13 +3,13 @@
   <body>
 
     <gm-map-context>
-      <div gm-map-canvas="" gm-center="{ lat: 53.4152431, lng: -8.2390307 }" gm-zoom="7" style="height: 400px; width: 400px;"></div>
+      <div gm-map-canvas="" center="{ lat: 53.4152431, lng: -8.2390307 }" zoom="7" style="height: 400px; width: 400px;"></div>
       <gm-add-ons>
         <gm-overlapping-marker-spiderfier>
-          <gm-marker ng-repeat="i in [1,2,3]" gm-title="'Marker {{i}}'" gm-position="{ lat: 53.4152431, lng: -8.2390307 }" gm-optimized="false">
+          <gm-marker ng-repeat="i in [1,2,3]" title="'Marker {{i}}'" position="{ lat: 53.4152431, lng: -8.2390307 }" optimized="false">
             <div gm-info-window="">
               <p>Info Window {{i}} Content</p>
-              <gm-add-listeners gm-to="$getMarker()" gm-listeners="{ gm_oms_click: '$openInfoWindow()' }"></gm-add-listeners>
+              <gm-add-listeners to="$getMarker()" listeners="{ gm_oms_click: '$openInfoWindow()' }"></gm-add-listeners>
             </div>
           </gm-marker>
         </gm-overlapping-marker-spiderfier>

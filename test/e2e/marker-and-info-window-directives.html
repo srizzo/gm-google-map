@@ -3,18 +3,18 @@
   <body>
     <gm-map-context>
       <div id="map" gm-map-canvas
-           gm-center="{ lat: 53.4152431, lng: -8.2390307 }"
-           gm-zoom="7"
+           center="{ lat: 53.4152431, lng: -8.2390307 }"
+           zoom="7"
            style="height: 400px; width: 400px;">
       </div>
       <gm-add-ons>
         <gm-marker
-            gm-title="'Marker 1'"
-            gm-position="{ lat: 53.4152431, lng: -8.2390307 }"
-            gm-optimized="false"
+            title="'Marker 1'"
+            position="{ lat: 53.4152431, lng: -8.2390307 }"
+            optimized="false"
             >
           <div gm-info-window>
-            <gm-add-listeners gm-to="$getMarker()" gm-listeners="{ click: '$openInfoWindow()' }"></gm-add-listeners>
+            <gm-add-listeners to="$getMarker()" listeners="{ click: '$openInfoWindow()' }"></gm-add-listeners>
             <p>Info Window 1 Content</p>
           </div>
         </gm-marker>        
