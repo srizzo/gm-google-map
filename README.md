@@ -27,5 +27,5 @@ Demos and more examples at [http://srizzo.github.io/gm-google-map/](http://srizz
 
 ## Download
 
-You can download the latest, minified version at [https://cdn.rawgit.com/srizzo/gm-google-map/0.0.7/dist/gm-google-map.min.js](https://cdn.rawgit.com/srizzo/gm-google-map/0.0.7/dist/gm-google-map.min.js).
+You can download the latest, minified version at [https://cdn.rawgit.com/srizzo/gm-google-map/0.0.8/dist/gm-google-map.min.js](https://cdn.rawgit.com/srizzo/gm-google-map/0.0.8/dist/gm-google-map.min.js).
 
