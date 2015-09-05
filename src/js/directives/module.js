@@ -290,7 +290,7 @@ angular.module('gm-google-map', [])
 
           scope.$on("$destroy", function() {
             unbindIconWatch()
-            marker.$setMap(null)
+            marker.setMap(null)
             scope.$emit("gm_marker_destroyed", marker)
           })
           
