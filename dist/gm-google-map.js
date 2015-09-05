@@ -1,4 +1,4 @@
-/*! gm-google-map - v0.0.6 - 2015-09-05
+/*! gm-google-map - v0.0.7 - 2015-09-05
 * https://github.com/srizzo/gm-google-map
 * Copyright (c) 2015 Samuel Rizzo; Licensed MIT */
 angular.module('gm-google-map', [])
@@ -222,32 +222,36 @@ angular.module('gm-google-map', [])
   return {
     restrict: 'AE',
     scope: true,
-    link: function(scope, element) {
+    compile: function () {
+      return {
+        pre: function(scope, element) {
 
-      element.css("display", "none")
+          element.css("display", "none")
 
-      var oms = new OverlappingMarkerSpiderfier(scope.$getMap(), {
-        keepSpiderfied: true
-      })
+          var oms = new OverlappingMarkerSpiderfier(scope.$getMap(), {
+            keepSpiderfied: true
+          })
       
-      scope.$getOverlappingMarkerSpiderfier = function () {
-        return oms
+          scope.$getOverlappingMarkerSpiderfier = function () {
+            return oms
+          }
+
+          scope.$on("gm_marker_created", function (event, marker) {
+            oms.addMarker(marker)
+          })
+
+          scope.$on("gm_marker_destroyed", function (event, marker) {
+            oms.removeMarker(marker)
+          })
+
+          oms.addListener('click', function(marker, event) {
+            scope.$apply(function() {
+              google.maps.event.trigger(marker, "gm_oms_click", event)
+            })
+          })
+
+        }
       }
-
-      scope.$on("gm_marker_created", function (event, marker) {
-        oms.addMarker(marker)
-      })
-
-      scope.$on("gm_marker_destroyed", function (event, marker) {
-        oms.removeMarker(marker)
-      })
-
-      oms.addListener('click', function(marker, event) {
-        scope.$apply(function() {
-          google.maps.event.trigger(marker, "gm_oms_click", event)
-        })
-      })
-
     }
   }
 })
