@@ -1,4 +1,5 @@
 describe('overlapping-marker-spiderfier directive', function() {
+  var until = protractor.ExpectedConditions;
   
   var map = element(by.id('map'));
   var marker1 = element(by.css("*[title='Marker 1']"));
@@ -8,6 +9,8 @@ describe('overlapping-marker-spiderfier directive', function() {
 
   beforeEach(function() {
     browser.get('/test/e2e/overlapping-marker-spiderfier-directive.html');
+
+    browser.wait(until.presenceOf(marker3), 10000);
   });
 
   it('should spiderfy on click', function() {
@@ -27,6 +30,4 @@ describe('overlapping-marker-spiderfier directive', function() {
     marker1.click();
     expect(infoWindow1.isDisplayed()).toBe(true);
   });
-
-
 });

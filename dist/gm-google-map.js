@@ -1,6 +1,6 @@
-/*! gm-google-map - v0.0.8 - 2015-09-05
+/*! gm-google-map - v0.0.9 - 2017-06-25
 * https://github.com/srizzo/gm-google-map
-* Copyright (c) 2015 Samuel Rizzo; Licensed MIT */
+* Copyright (c) 2017 Samuel Rizzo; Licensed MIT */
 angular.module('gm-google-map', [])
 /**
  * @description
@@ -318,6 +318,80 @@ angular.module('gm-google-map', [])
 
           angular.forEach(scope.$eval(attrs.listenersOnce), function (listener, key) {
             google.maps.event.addListenerOnce(marker, key, function () {
+              scope.safeApply(function () {
+                listener()
+              })
+            })
+          })          
+        }
+      }
+    }
+  }
+})
+
+/**
+ * @description
+ *
+ * Polyline. Expects $scope.$getMap() to be available.  Publishes $scope.$getPolyline(). Emits gm_polyline_created and gm_polyline_destroyed angularjs events.
+ *
+ */
+.directive('gmPolyline', function() {
+  return {
+    restrict: 'AE',
+    scope: true,
+    compile: function() {
+      return {
+        pre: function(scope, element, attrs) {
+
+          var polyline = new google.maps.Polyline({
+            map: scope.$getMap(),
+            data: scope.$eval(attrs.data),
+            path: scope.$eval(attrs.path),
+            geodesic: scope.$eval(attrs.geodesic),
+            strokeColor: scope.$eval(attrs.strokeColor),
+            strokeOpacity: scope.$eval(attrs.strokeOpacity),
+            strokeWeight: scope.$eval(attrs.strokeWeight)
+          })
+
+          scope.$getPolyline = function () {
+            return polyline
+          }
+
+          if (attrs.icon) {
+            var unbindIconWatch = scope.$watch(attrs.icon, function(current) {
+              polyline.setIcon(current)
+            })
+          }
+
+          scope.$emit("gm_polyline_created", polyline)
+
+          scope.$on("$destroy", function() {
+            unbindIconWatch()
+            polyline.setMap(null)
+            scope.$emit("gm_polyline_destroyed", polyline)
+          })
+          
+          scope.safeApply = function(fn) {
+            var phase = scope.$root.$$phase
+            if(phase == '$apply' || phase == '$digest') {
+              if(fn && (typeof(fn) === 'function')) {
+                fn()
+              }
+            } else {
+              scope.$apply(fn)
+            }
+          }
+          
+          angular.forEach(scope.$eval(attrs.listeners), function (listener, key) {
+            google.maps.event.addListener(polyline, key, function () {
+              scope.safeApply(function () {
+                listener()
+              })
+            })
+          })
+
+          angular.forEach(scope.$eval(attrs.listenersOnce), function (listener, key) {
+            google.maps.event.addListenerOnce(polyline, key, function () {
               scope.safeApply(function () {
                 listener()
               })

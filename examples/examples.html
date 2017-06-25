@@ -8,8 +8,6 @@
 
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
-    
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -67,6 +65,28 @@
       </div>      
             
 
+
+      <h3>Polylines:</h3>
+      
+      <div class="example">
+<gm-map-context>
+  <div gm-map-canvas
+       center="{ lat: 0, lng: -180 }"
+       zoom="2"
+       style="height: 400px; width: 400px;"></div>
+  <gm-add-ons>
+    <gm-polyline path="[{lat: 37.772, lng: -122.214},
+                          {lat: 21.291, lng: -157.821},
+                          {lat: -18.142, lng: 178.431},
+                          {lat: -27.467, lng: 153.027}]"
+                 geodesic="true"
+                 stroke-color="'blue'"
+                 stroke-opacity="0.3"
+                 stroke-weight="3">
+    </gm-polyline>
+  </gm-add-ons>
+</gm-map-context>
+      </div>      
 
 
       <h3>Overlapping Marker Spiderfier:</h3>
@@ -161,10 +181,9 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
-    <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDmtl4rOp6rs2r-Emnixld0efhArt0T1DA"></script>
 
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 
     <script src="https://cdn.rawgit.com/srizzo/OverlappingMarkerSpiderfier/0.3.3/dist/oms.min.js"></script>
     
