@@ -6,6 +6,7 @@ describe('control directive', function() {
 
   beforeEach(function() {
     browser.get('/test/e2e/control-directive.html');
+    browser.wait(until.visibilityOf(map), 10000);
     browser.wait(until.presenceOf(control), 10000);
   });
 

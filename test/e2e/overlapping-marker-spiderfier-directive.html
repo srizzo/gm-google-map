@@ -3,7 +3,7 @@
   <body>
 
     <gm-map-context>
-      <div gm-map-canvas="" center="{ lat: 53.4152431, lng: -8.2390307 }" zoom="7" style="height: 400px; width: 400px;"></div>
+      <div id="map" gm-map-canvas ng-cloak center="{ lat: 53.4152431, lng: -8.2390307 }" zoom="7" style="height: 400px; width: 400px;"></div>
       <gm-add-ons>
         <gm-overlapping-marker-spiderfier>
           <gm-marker ng-repeat="i in [1,2,3]" title="'Marker {{i}}'" position="{ lat: 53.4152431, lng: -8.2390307 }" optimized="false">

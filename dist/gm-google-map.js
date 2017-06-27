@@ -1,4 +1,4 @@
-/*! gm-google-map - v0.0.9 - 2017-06-25
+/*! gm-google-map - v0.0.10 - 2017-06-26
 * https://github.com/srizzo/gm-google-map
 * Copyright (c) 2017 Samuel Rizzo; Licensed MIT */
 angular.module('gm-google-map', [])
@@ -427,14 +427,16 @@ angular.module('gm-google-map', [])
           }
         }
         
+        var to = scope.$eval(attrs.to)
+        
         angular.forEach(scope.$eval(attrs.listeners), function (callback, key) {
-          scope.$eval(attrs.to).addListener(key, function () {
+          google.maps.event.addListener(to, key, function () {
             scope.$eval(callback)
           })
         })
 
         angular.forEach(scope.$eval(attrs.listenersOnce), function (callback, key) {
-          scope.$eval(attrs.to).addListenerOnce(key, function () {
+          google.maps.event.addListenerOnce(to, key, function () {
             scope.$eval(callback)
           })
         })

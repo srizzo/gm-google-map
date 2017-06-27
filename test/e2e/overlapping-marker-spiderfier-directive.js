@@ -9,12 +9,13 @@ describe('overlapping-marker-spiderfier directive', function() {
 
   beforeEach(function() {
     browser.get('/test/e2e/overlapping-marker-spiderfier-directive.html');
-
-    browser.wait(until.presenceOf(marker3), 10000);
+    browser.wait(until.visibilityOf(map), 10000);
+    browser.wait(until.visibilityOf(marker3), 10000);
   });
 
   it('should spiderfy on click', function() {
     marker3.click();
+    browser.wait(until.visibilityOf(marker1), 10000);
     marker1.getLocation().then(function (location1) {
       marker2.getLocation().then(function (location2) {
         marker3.getLocation().then(function (location3) {
@@ -27,6 +28,7 @@ describe('overlapping-marker-spiderfier directive', function() {
 
   it('should open the marker info window on marker click', function() {
     marker3.click();
+    browser.wait(until.visibilityOf(marker1), 10000);
     marker1.click();
     expect(infoWindow1.isDisplayed()).toBe(true);
   });

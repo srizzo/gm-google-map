@@ -424,14 +424,16 @@ angular.module('gm-google-map', [])
           }
         }
         
+        var to = scope.$eval(attrs.to)
+        
         angular.forEach(scope.$eval(attrs.listeners), function (callback, key) {
-          scope.$eval(attrs.to).addListener(key, function () {
+          google.maps.event.addListener(to, key, function () {
             scope.$eval(callback)
           })
         })
 
         angular.forEach(scope.$eval(attrs.listenersOnce), function (callback, key) {
-          scope.$eval(attrs.to).addListenerOnce(key, function () {
+          google.maps.event.addListenerOnce(to, key, function () {
             scope.$eval(callback)
           })
         })
