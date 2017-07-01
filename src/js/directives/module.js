@@ -279,7 +279,13 @@ angular.module('gm-google-map', [])
           scope.$getMarker = function () {
             return marker
           }
-
+          
+          if (attrs.position) {
+            var unbindPositionWatch = scope.$watch(attrs.position, function(current) {
+              marker.setPosition(new google.maps.LatLng(current.lat, current.lng))
+            })
+          }
+          
           if (attrs.icon) {
             var unbindIconWatch = scope.$watch(attrs.icon, function(current) {
               marker.setIcon(current)
@@ -289,6 +295,7 @@ angular.module('gm-google-map', [])
           scope.$emit("gm_marker_created", marker)
 
           scope.$on("$destroy", function() {
+            unbindPositionWatch()
             unbindIconWatch()
             marker.setMap(null)
             scope.$emit("gm_marker_destroyed", marker)

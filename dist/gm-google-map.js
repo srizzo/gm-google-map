@@ -1,4 +1,4 @@
-/*! gm-google-map - v0.0.11 - 2017-06-27
+/*! gm-google-map - v0.0.12 - 2017-07-01
 * https://github.com/srizzo/gm-google-map
 * Copyright (c) 2017 Samuel Rizzo; Licensed MIT */
 angular.module('gm-google-map', [])
@@ -282,7 +282,13 @@ angular.module('gm-google-map', [])
           scope.$getMarker = function () {
             return marker
           }
-
+          
+          if (attrs.position) {
+            var unbindPositionWatch = scope.$watch(attrs.position, function(current) {
+              marker.setPosition(new google.maps.LatLng(current.lat, current.lng))
+            })
+          }
+          
           if (attrs.icon) {
             var unbindIconWatch = scope.$watch(attrs.icon, function(current) {
               marker.setIcon(current)
@@ -292,6 +298,7 @@ angular.module('gm-google-map', [])
           scope.$emit("gm_marker_created", marker)
 
           scope.$on("$destroy", function() {
+            unbindPositionWatch()
             unbindIconWatch()
             marker.setMap(null)
             scope.$emit("gm_marker_destroyed", marker)
