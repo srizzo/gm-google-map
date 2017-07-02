@@ -1,4 +1,4 @@
-/*! gm-google-map - v0.0.12 - 2017-07-01
+/*! gm-google-map - v0.0.13 - 2017-07-02
 * https://github.com/srizzo/gm-google-map
 * Copyright (c) 2017 Samuel Rizzo; Licensed MIT */
 angular.module('gm-google-map', [])
@@ -37,22 +37,25 @@ angular.module('gm-google-map', [])
     require: '^?gmMapContext',
     link: {
       pre: function (scope, element, attrs) {
-
         var disableDefaultUI = false
+        var styles = [
+          {
+            featureType: 'poi',
+            elementType: 'all',
+            stylers: [{ visibility: 'off' }]
+          }
+        ]
         
         if (attrs.disableDefaultUi)
           disableDefaultUI = scope.$eval(attrs.disableDefaultUi)
-
+          
+        if (attrs.styles) 
+          styles = scope.$eval(attrs.styles)
+          
         var _map = new google.maps.Map(element[0], {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           disableDefaultUI: disableDefaultUI,
-          styles: [
-            {
-              featureType: 'poi',
-              elementType: 'all',
-              stylers: [{ visibility: 'off' }]
-            }
-          ]
+          styles: styles
         })
         
         if (!scope.$setMap) {

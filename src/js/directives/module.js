@@ -34,22 +34,25 @@ angular.module('gm-google-map', [])
     require: '^?gmMapContext',
     link: {
       pre: function (scope, element, attrs) {
-
         var disableDefaultUI = false
+        var styles = [
+          {
+            featureType: 'poi',
+            elementType: 'all',
+            stylers: [{ visibility: 'off' }]
+          }
+        ]
         
         if (attrs.disableDefaultUi)
           disableDefaultUI = scope.$eval(attrs.disableDefaultUi)
-
+          
+        if (attrs.styles) 
+          styles = scope.$eval(attrs.styles)
+          
         var _map = new google.maps.Map(element[0], {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           disableDefaultUI: disableDefaultUI,
-          styles: [
-            {
-              featureType: 'poi',
-              elementType: 'all',
-              stylers: [{ visibility: 'off' }]
-            }
-          ]
+          styles: styles
         })
         
         if (!scope.$setMap) {
