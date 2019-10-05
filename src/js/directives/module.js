@@ -42,19 +42,19 @@ angular.module('gm-google-map', [])
             stylers: [{ visibility: 'off' }]
           }
         ]
-        
+
         if (attrs.disableDefaultUi)
           disableDefaultUI = scope.$eval(attrs.disableDefaultUi)
-          
-        if (attrs.styles) 
+
+        if (attrs.styles)
           styles = scope.$eval(attrs.styles)
-          
+
         var _map = new google.maps.Map(element[0], {
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           disableDefaultUI: disableDefaultUI,
           styles: styles
         })
-        
+
         if (!scope.$setMap) {
           scope.$setMap = function (map) {
             _map = map
@@ -63,7 +63,7 @@ angular.module('gm-google-map', [])
             return _map
           }
         }
-        
+
         scope.$setMap(_map)
 
         if (attrs.zoom) {
@@ -107,7 +107,7 @@ angular.module('gm-google-map', [])
             })
           })
         })
-      
+
       }
     }
   }
@@ -152,7 +152,7 @@ angular.module('gm-google-map', [])
           }
 
           scope.$show = function() {
-            
+
           var index = map.controls[google.maps.ControlPosition[position]].indexOf(domElement)
           if (index < 0)
             map.controls[google.maps.ControlPosition[position]].push(domElement)
@@ -231,7 +231,7 @@ angular.module('gm-google-map', [])
           var oms = new OverlappingMarkerSpiderfier(scope.$getMap(), {
             keepSpiderfied: true
           })
-      
+
           scope.$getOverlappingMarkerSpiderfier = function () {
             return oms
           }
@@ -276,19 +276,19 @@ angular.module('gm-google-map', [])
             title: scope.$eval(attrs.title),
             optimized: scope.$eval(attrs.optimized),
             position: new google.maps.LatLng(scope.$eval(attrs.position).lat, scope.$eval(attrs.position).lng)
-            
+
           })
 
           scope.$getMarker = function () {
             return marker
           }
-          
+
           if (attrs.position) {
             var unbindPositionWatch = scope.$watch(attrs.position, function(current) {
               marker.setPosition(new google.maps.LatLng(current.lat, current.lng))
             })
           }
-          
+
           if (attrs.icon) {
             var unbindIconWatch = scope.$watch(attrs.icon, function(current) {
               marker.setIcon(current)
@@ -303,7 +303,7 @@ angular.module('gm-google-map', [])
             marker.setMap(null)
             scope.$emit("gm_marker_destroyed", marker)
           })
-          
+
           scope.safeApply = function(fn) {
             var phase = scope.$root.$$phase
             if(phase == '$apply' || phase == '$digest') {
@@ -314,7 +314,7 @@ angular.module('gm-google-map', [])
               scope.$apply(fn)
             }
           }
-          
+
           angular.forEach(scope.$eval(attrs.listeners), function (listener, key) {
             google.maps.event.addListener(marker, key, function () {
               scope.safeApply(function () {
@@ -329,7 +329,7 @@ angular.module('gm-google-map', [])
                 listener()
               })
             })
-          })          
+          })
         }
       }
     }
@@ -377,7 +377,7 @@ angular.module('gm-google-map', [])
             polyline.setMap(null)
             scope.$emit("gm_polyline_destroyed", polyline)
           })
-          
+
           scope.safeApply = function(fn) {
             var phase = scope.$root.$$phase
             if(phase == '$apply' || phase == '$digest') {
@@ -388,7 +388,7 @@ angular.module('gm-google-map', [])
               scope.$apply(fn)
             }
           }
-          
+
           angular.forEach(scope.$eval(attrs.listeners), function (listener, key) {
             google.maps.event.addListener(polyline, key, function () {
               scope.safeApply(function () {
@@ -403,7 +403,7 @@ angular.module('gm-google-map', [])
                 listener()
               })
             })
-          })          
+          })
         }
       }
     }
@@ -433,9 +433,9 @@ angular.module('gm-google-map', [])
             scope.$apply(fn)
           }
         }
-        
+
         var to = scope.$eval(attrs.to)
-        
+
         angular.forEach(scope.$eval(attrs.listeners), function (callback, key) {
           google.maps.event.addListener(to, key, function () {
             scope.safeApply(function () {
@@ -451,7 +451,7 @@ angular.module('gm-google-map', [])
             })
           })
         })
-      
+
       }
     }
   }
